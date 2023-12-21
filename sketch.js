@@ -18,23 +18,43 @@ function setup() {
     grid.push(row)
   }
 
+  // center
+  let testCell1 = grid[10][10]
+  testCell1.alive = true
 
-  let testCell = grid[9][9]
-  testCell.alive = true
+  // topleft
+  let testCell2 = grid[9][9]
+  testCell2.alive = true
 
-  let testCellTwo = grid[10][10]
-  testCellTwo.alive = true
+  // top
+  let testCell3 = grid[9][10]
+  testCell3.alive = true
 
-  let testCellThree = grid[11][11]
-  testCellThree.alive = true
+  // topright
+  let testCell4 = grid[9][11]
+  testCell4.alive = true
 
-  let testCellFour = grid[10][11]
-  testCellFour.alive = true
+  // right
+  let testCell5 = grid[10][11]
+  testCell5.alive = true
 
-  let testCellFive = grid[9][11]
-  testCellFive.alive = true
+  // bottomright
+  let testCell6 = grid[11][11]
+  testCell6.alive = true
 
-  console.log(testCellThree.cellMatrix())
+  // bottom
+  let testCell7 = grid[11][10]
+  testCell7.alive = true
+
+  // bottomleft
+  let testCell8 = grid[11][9]
+  testCell8.alive = true
+
+  // left
+  let testCell9 = grid[10][9]
+  testCell9.alive = true
+
+  console.log(testCell1.cellMatrix())
 
   // for (let i = 0; i < 450; i++) {
   //   let x = floor(random(0, 10))
@@ -49,6 +69,18 @@ function setup() {
       let cell = row[y]
       // cell.checkAdjacentCells()
       cell.show()
+    }
+  }
+}
+
+function mouseClicked() {
+  for (let x = 0; x < rows; x++) {
+    let row = grid[x]
+    for (let y = 0; y < cols; y++) {
+      let cell = row[y]
+      cell.checkAdjacentCells()
+      cell.show()
+      console.log("press")
     }
   }
 }
