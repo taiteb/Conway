@@ -53,10 +53,6 @@ function setup() {
   }
 }
 
-function mouseClicked(){
-  testCellFive
-}
-
 function draw() {
   // background(255)
   frameRate(.25)
