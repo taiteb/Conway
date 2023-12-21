@@ -1,8 +1,9 @@
 let grid = [];
-let cols = 10;
-let rows = 10;
+let cols = 20;
+let rows = 20;
 let cellWidth
 let cellHeight
+let seed = 20
 
 function setup() {
   createCanvas(400, 400);
@@ -18,27 +19,57 @@ function setup() {
   }
 
 
-  // let testCell = grid[10][10]
-  // testCell.alive = true
+  let testCell = grid[9][9]
+  testCell.alive = true
 
-  let testCellTwo = grid[1][1]
+  let testCellTwo = grid[10][10]
   testCellTwo.alive = true
-  testCellTwo.checkAdjacentCells()
 
-  for (let x = 0; x < grid.length; x++) {
+  let testCellThree = grid[11][11]
+  testCellThree.alive = true
+
+  let testCellFour = grid[10][11]
+  testCellFour.alive = true
+
+  let testCellFive = grid[9][11]
+  testCellFive.alive = true
+
+  console.log(testCellThree.cellMatrix())
+
+  // for (let i = 0; i < 450; i++) {
+  //   let x = floor(random(0, 10))
+  //   let y = floor(random(1, 9))
+  //   grid[x][y].alive = true
+  //   // console.log(x, y, grid[x][y])
+  // }
+
+  for (let x = 0; x < rows; x++) {
     let row = grid[x]
-    for (let y = 0; y < row.length; y++) {
+    for (let y = 0; y < cols; y++) {
       let cell = row[y]
-      cell.show()
       // cell.checkAdjacentCells()
+      cell.show()
     }
   }
+}
 
-  console.log(grid)
+function mouseClicked(){
+  testCellFive
 }
 
 function draw() {
-  grid
+  // background(255)
+  frameRate(.25)
+  // for (let x = 0; x < grid.length; x++) {
+  //   let row = grid[x]
+  //   for (let y = 0; y < row.length; y++) {
+  //     let cell = row[y]
+  //     cell.checkAdjacentCells()
+  //     // console.log(cell.cellMatrix())
+  //     cell.show()
+  //   }
+  // }
+  // noLoop()
 }
 
 const Cell = class {
@@ -53,43 +84,87 @@ const Cell = class {
   }
 
   show = () => {
-    strokeWeight(5)
+    strokeWeight(1)
     if (this.alive) {
-      fill(0, 0, 255)
-    } else if (this.neighbor) {
-      fill(255, 0, 0)
-    } else {
-      noFill()
+      rect(this.xpos, this.ypos, cellWidth, cellHeight)
     }
-    rect(this.xpos, this.ypos, cellWidth, cellHeight)
   }
 
-  checkAdjacentCells = () => {
+  cellMatrix = () => {
     let liveCells = 0
-    console.log(this.x, this.y)
     // topleft, top, topright, right, bottomright, bottom, bottomleft, left
     if (this.x >= 1 && this.y >= 1) {
       let topLeft = grid[this.x - 1][this.y - 1]
-      topLeft.neighbor = true
+      // topLeft.neighbor = true
       if (topLeft.alive) {
-        liveCells++ 
+        liveCells++
       }
-    } 
-    if (this.x >= 1){
-      let top = grid[this.x - 1][this.y]
-      top.neighbor = true
     }
-
-    if (this.x >= 1 && this.y <= cols) {
+    if (this.x >= 1) {
+      let top = grid[this.x - 1][this.y]
+      // top.neighbor = true
+      if (top.alive) {
+        liveCells++
+      }
+    }
+    if (this.x >= 1 && this.y < cols - 1) {
       let topright = grid[this.x - 1][this.y + 1]
-      topright.neighbor = true
+      // topright.neighbor = true
       if (topright.alive) {
         liveCells++
       }
     }
+    if (this.y < cols - 1) {
+      let right = grid[this.x][this.y + 1]
+      // right.neighbor = true
+      if (right.alive) {
+        liveCells++
+      }
+    }
+    if (this.x < rows - 1 && this.y < cols - 1) {
+      let bottomright = grid[this.x + 1][this.y + 1]
+      // bottomright.neighbor = true
+      if (bottomright.alive) {
+        liveCells++
+      }
+    }
+    if (this.x < rows - 1) {
+      let bottom = grid[this.x + 1][this.y]
+      // bottom.neighbor = true
+      if (bottom.alive) {
+        liveCells++
+      }
+    }
+    if (this.x < rows - 1 && this.y >= 1) {
+      let bottomleft = grid[this.x + 1][this.y - 1]
+      // bottomleft.neighbor = true
+      if (bottomleft.alive) {
+        liveCells++
+      }
+    }
+    if (this.y >= 1) {
+      let bottom = grid[this.x][this.y - 1]
+      // bottom.neighbor = true
+      if (bottom.alive) {
+        liveCells++
+      }
+    }
+    return liveCells
   }
-}
 
-function checkAdjacentCells(cell) {
+  checkAdjacentCells = () => {
+    let liveCells = this.cellMatrix()
+    if (liveCells == 3) {
+      this.alive == true
+    }
+    if (this.alive && liveCells < 2) {
+      this.alive = false
+      // console.log("should be dead")
+    } else if (this.alive && liveCells > 3) {
+      this.alive = false
+    } else if (this.alive) {
+      this.alive = true
+    }
+  }
 
 }
