@@ -9,8 +9,7 @@ let cellHeight
 let seed = (cols * rows) / 6
 
 function setup() {
-  createCanvas(400, 400);
-  background(125)
+  createCanvas(700, 700);
   cellWidth = width / cols
   cellHeight = height / rows
   for (x = 0; x < rows; x++) {
@@ -81,7 +80,7 @@ function setup() {
 }
 
 function draw() {
-  background(255)
+  background(65, 60, 88)
   frameRate(20)
   for (let x = 0; x < grid.length; x++) {
     let row = grid[x]
@@ -116,8 +115,8 @@ const Cell = class {
   }
 
   show = () => {
-    strokeWeight(1)
-    fill(0)
+    noStroke()
+    fill(71, 229, 111)
     rect(this.xpos, this.ypos, cellWidth, cellHeight)
   }
 
